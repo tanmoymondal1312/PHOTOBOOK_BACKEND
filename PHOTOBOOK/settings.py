@@ -170,11 +170,19 @@ STATIC_URL = 'static/'
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 # settings.py
-TWILIO_ACCOUNT_SID = 'AC1fe2ee83b43856d902b415a9273b8c31'
-TWILIO_AUTH_TOKEN = '5e20829bca291963fde9119ca3d7b4dd'
-TWILIO_WHATSAPP_NUMBER = 'whatsapp:+14155238886'
-MY_WHATSAPP_NUMBER = 'whatsapp:+8801736008374'
 
+
+import environ
+
+# Initialize environment variables
+env = environ.Env()
+environ.Env.read_env()
+
+# Load the secret from environment variable
+TWILIO_ACCOUNT_SID = env('TWILIO_ACCOUNT_SID')
+TWILIO_AUTH_TOKEN = env('TWILIO_AUTH_TOKEN')
+TWILIO_WHATSAPP_NUMBER = env('TWILIO_WHATSAPP_NUMBER')
+MY_WHATSAPP_NUMBER = env('MY_WHATSAPP_NUMBER')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

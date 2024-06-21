@@ -6,6 +6,12 @@ from django.conf import settings
 from Datas.models import Booking
 from django.utils import timezone
 import pytz
+import environ
+from twilio.rest import Client
+
+# Initialize environment variables
+env = environ.Env()
+environ.Env.read_env()
 
 
 @api_view(['POST'])
@@ -17,9 +23,8 @@ def WhatsappBooking(request):
     if not name or not service or not number:
         return Response({'error': 'All fields are required'}, status=400)
 
-    account_sid = 'AC1fe2ee83b43856d902b415a9273b8c31'
-    auth_token = '5e20829bca291963fde9119ca3d7b4dd'
-    client = Client(account_sid, auth_token)
+   
+    client = Client(env('TWILIO_ACCOUNT_SID'), env('TWILIO_AUTH_TOKEN'))
     tz = pytz.timezone('Asia/Dhaka')
     
 
