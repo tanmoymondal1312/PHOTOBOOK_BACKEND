@@ -6,12 +6,6 @@ from django.conf import settings
 from Datas.models import Booking
 from django.utils import timezone
 import pytz
-import environ
-from twilio.rest import Client
-
-# Initialize environment variables
-env = environ.Env()
-environ.Env.read_env()
 
 
 @api_view(['POST'])
@@ -23,8 +17,9 @@ def WhatsappBooking(request):
     if not name or not service or not number:
         return Response({'error': 'All fields are required'}, status=400)
 
-   
-    client = Client(env('TWILIO_ACCOUNT_SID'), env('TWILIO_AUTH_TOKEN'))
+    account_sid = 'AC1fe2ee83b43856d902b415a9273b8c31'
+    auth_token = '4140346b75cf194759719a5a245c6cf3'
+    client = Client(account_sid, auth_token)
     tz = pytz.timezone('Asia/Dhaka')
     
 
@@ -37,13 +32,16 @@ def WhatsappBooking(request):
             
 
         )
-    message_body = f"Id-:{booking.id}\n---Booking Details---\nName: {name}\nService: {service}\nNumber: {number}\n Booked At:{booking.created_at}"    
+    print("Record Created")
+    message_body = f"Id-:{booking.id}\n---Booking Details---\nName: {name}\nMessage: {service}\nNumber: {number}\n Booked At:{booking.created_at}"    
     try:
         message = client.messages.create(
            from_='whatsapp:+14155238886',
            body=message_body,
            to='whatsapp:+8801736008374'
+          
           )
+        print("Not Try Error")
         booking.whatsapp_message_sent = True
         booking.save()
 
