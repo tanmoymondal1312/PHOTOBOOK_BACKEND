@@ -4,3 +4,4 @@ djangorestframework_simplejwt==5.3.1
 python-decouple==3.8
 pytz==2024.1
 twilio==9.2.0
+gunicorn
