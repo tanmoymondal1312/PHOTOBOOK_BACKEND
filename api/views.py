@@ -15,7 +15,7 @@ def WhatsappBooking(request):
     number = request.data.get('number')
 
     if not name or not service or not number:
-        return Response({'error': 'All fields are required'}, status=400)
+        return Response({'error': 'All fields are required ha ha'}, status=400)
 
     account_sid = 'AC1fe2ee83b43856d902b415a9273b8c31'
     auth_token = '4140346b75cf194759719a5a245c6cf3'
